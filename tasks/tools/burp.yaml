@@ -1,0 +1,11 @@
+---
+- name: Install Burp Suite Professional
+  become: true
+  become_user: "{{ username }}"
+  ansible.builtin.shell:
+    chdir: /tmp/
+    cmd: |
+      wget -qO burpsuite_pro.sh "https://portswigger-cdn.net/burp/releases/download?product=pro&type=Linux" &&
+      chmod +x burpsuite_pro.sh && 
+      ./burpsuite_pro.sh -q && 
+      rm -f burpsuite_pro.sh

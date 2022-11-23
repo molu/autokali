@@ -1,0 +1,14 @@
+---
+- name: Auto Kali configuration
+  hosts: all
+  vars_files:
+    - "vars/user.yaml"
+  tasks:
+    - name: Play all tasks
+      ansible.builtin.include_tasks: "{{ ansible_task }}"
+      loop:
+        - "tasks/system.yaml"
+        - "tasks/user.yaml"
+        - "tasks/tools.yaml"
+      loop_control:
+        loop_var: ansible_task

@@ -1,0 +1,4 @@
+username: kali
+password: kali
+shell: zsh
+tools_dir: ~/Tools

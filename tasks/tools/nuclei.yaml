@@ -1,0 +1,5 @@
+---
+- name: Install Nuclei
+  become: true
+  become_user: "{{ username }}"
+  ansible.builtin.shell: "go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest"

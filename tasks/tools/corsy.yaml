@@ -1,0 +1,27 @@
+---
+- name: Install Corsy
+  become: true
+  become_user: "{{ username }}"
+  block:
+    - name: Clone the Corsy repo
+      git:
+        repo: https://github.com/s0md3v/Corsy
+        version: master
+        dest: "{{ tools_dir }}/corsy"
+        update: true
+
+    - name: Create Corsy venv and install the requirements
+      become: true
+      become_user: "{{ username }}"
+      ansible.builtin.shell:
+        chdir: "{{ tools_dir }}/corsy/"
+        cmd: |
+          python3 -m venv .venv &&
+          .venv/bin/pip3 install -r requirements.txt
+
+    - name: Set alias for Corsy
+      become: true
+      become_user: "{{ username }}"
+      lineinfile:
+        path: "/home/{{ username }}/.{{ shell }}rc"
+        line: "alias corsy='{{ tools_dir }}/corsy/.venv/bin/python3 {{ tools_dir }}/corsy/corsy.py'"

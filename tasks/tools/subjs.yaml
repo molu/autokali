@@ -1,0 +1,5 @@
+---
+- name: Install Subjs
+  become: true
+  become_user: "{{ username }}"
+  ansible.builtin.shell: "go install github.com/lc/subjs@latest"

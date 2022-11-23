@@ -1,0 +1,5 @@
+---
+- name: Install Uncover
+  become: true
+  become_user: "{{ username }}"
+  ansible.builtin.shell: "go install github.com/projectdiscovery/uncover/cmd/uncover@latest"

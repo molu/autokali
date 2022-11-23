@@ -1,0 +1,5 @@
+---
+- name: Install Subfinder
+  become: true
+  become_user: "{{ username }}"
+  ansible.builtin.shell: "go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest"

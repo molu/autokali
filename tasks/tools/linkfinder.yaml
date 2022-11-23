@@ -1,0 +1,25 @@
+---
+- name: Install LinkFinder
+  become: true
+  become_user: "{{ username }}"
+  block:
+    - name: Clone the LinkFinder repo
+      git:
+        repo: https://github.com/GerbenJavado/LinkFinder
+        version: master
+        dest: "{{ tools_dir }}/linkfinder"
+        update: true
+
+    - name: Create LinkFinder venv and install the requirements
+      become: true
+      become_user: "{{ username }}"
+      ansible.builtin.shell:
+        chdir: "{{ tools_dir }}/linkfinder/"
+        cmd: "python3 -m venv .venv && .venv/bin/pip3 install -r requirements.txt"
+
+    - name: Set alias for LinkFinder
+      become: true
+      become_user: "{{ username }}"
+      lineinfile:
+        path: "/home/{{ username }}/.{{ shell }}rc"
+        line: "alias linkfinder='{{ tools_dir }}/linkfinder/.venv/bin/python3 {{ tools_dir }}/linkfinder/linkfinder.py'"

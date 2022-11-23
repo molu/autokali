@@ -1,0 +1,10 @@
+---
+- name: Download Wordlists
+  become: true
+  become_user: "{{ username }}"
+  git:
+    repo: https://github.com/molu/wordlists
+    version: master
+    dest: "{{ tools_dir }}/wordlists"
+    recursive: true
+    update: true

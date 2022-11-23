@@ -1,0 +1,25 @@
+---
+- name: Update the package cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+
+# the grub-pc was selecting wrong disk causing an error
+# even in noninteractive mode and with --force-confold option
+# TODO: try to find a way to update all packages non-interactively
+- name: Hold updating the grub-pc (apt-mark hold grub-pc)
+  become: true
+  ansible.builtin.dpkg_selections:
+    name: grub-pc
+    selection: hold
+
+- name: Upgrade the system packages
+  become: true
+  ansible.builtin.apt:
+    upgrade: true
+
+- name: Remove the packages that are no longer required
+  become: true
+  ansible.builtin.apt:
+    autoremove: yes
+    clean: yes
